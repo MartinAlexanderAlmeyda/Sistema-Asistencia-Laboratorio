@@ -70,10 +70,15 @@ public class MODULO_ROL extends javax.swing.JFrame {
         BTNGESTIONARLABORATORIO.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         BTNGESTIONARLABORATORIO.setForeground(new java.awt.Color(255, 255, 255));
         BTNGESTIONARLABORATORIO.setText("GESTIONAR LABORATORIO");
+        BTNGESTIONARLABORATORIO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNGESTIONARLABORATORIOActionPerformed(evt);
+            }
+        });
         getContentPane().add(BTNGESTIONARLABORATORIO, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 330, 350, 50));
 
         TXTFONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/606b54b09207dc84eeed2ee6_background.jpeg"))); // NOI18N
-        getContentPane().add(TXTFONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 470));
+        getContentPane().add(TXTFONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 511));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -88,6 +93,10 @@ public class MODULO_ROL extends javax.swing.JFrame {
     
     this.dispose();
     }//GEN-LAST:event_BTNREPORTEActionPerformed
+
+    private void BTNGESTIONARLABORATORIOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNGESTIONARLABORATORIOActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BTNGESTIONARLABORATORIOActionPerformed
 
     /**
      * @param args the command line arguments
