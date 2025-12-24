@@ -20,6 +20,7 @@ public class MODULO extends javax.swing.JFrame {
      */
     public MODULO() {
         initComponents();
+         setLocationRelativeTo(null);
     }
 
     /**

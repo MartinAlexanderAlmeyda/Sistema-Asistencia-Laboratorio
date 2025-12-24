@@ -13,7 +13,8 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
      * Creates new form Asistencia_de_Alumnos
      */
     public Asistencia_de_Alumnos() {
-        initComponents();   
+        initComponents();
+        setLocationRelativeTo(null);
     }
    
 
@@ -72,9 +73,8 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
                 {"21", "Gonzales Chavez", "Pool", null},
                 {"22", "Enrriquez Salas", "Marlon", null},
                 {"23", "Manrique Tipico", "Cecilia", null},
-                {"24", "Achuy Balboa", "Marcelo", null},
-                {"25", "Lira Solorzano", "Katherine", null},
-                {"26", "Campos Villa", "Jhon ",  new Boolean(false)}
+                {"24", "Campos Villa", "Jhon", null},
+                {"25", "Achuy Balboa", "Marcelo", null}
             },
             new String [] {
                 "N°", "Apellidos", "Nombres", "Asistencia"
@@ -190,7 +190,9 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1AncestorAdded
 
     private void btnExportarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarListaActionPerformed
-        // TODO add your handling code here:
+        Reporte_Alumnos newframe= new Reporte_Alumnos();
+      newframe.setVisible(true);
+      this.dispose();
     }//GEN-LAST:event_btnExportarListaActionPerformed
 
     private void btnAgregarFirmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFirmaActionPerformed

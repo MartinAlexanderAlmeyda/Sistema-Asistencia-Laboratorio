@@ -16,6 +16,7 @@ public class MODULO_ROL extends javax.swing.JFrame {
      */
     public MODULO_ROL() {
         initComponents();
+         setLocationRelativeTo(null);
     }
 
     /**
