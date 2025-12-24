@@ -14,6 +14,7 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
      */
     public Reporte_Alumnos() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

@@ -14,7 +14,7 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
      */
     public REGISTRAR_PRACTICA() {
         initComponents();
-     
+     setLocationRelativeTo(null);
     }
 
     /**
@@ -304,7 +304,9 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
     }//GEN-LAST:event_txtHoraFinActionPerformed
 
     private void txtRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegresarActionPerformed
-        // TODO add your handling code here:
+         PANELDEROLES ROLES=new PANELDEROLES ();
+        ROLES.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_txtRegresarActionPerformed
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
