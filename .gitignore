@@ -1,2 +1,35 @@
 /nbproject/private/
-/build/
+
+# ===================================================================
+# RESTO DE LA CONFIGURACIÓN NECESARIA PARA NETBEANS (JAVA ANT)
+# ===================================================================
+
+# --- ARCHIVOS COMPILADOS DE JAVA ---
+*.class
+
+# --- CARPETAS DE CONSTRUCCIÓN DE NETBEANS ---
+# Es vital ignorar esto para no subir binarios y evitar conflictos.
+build/
+dist/
+
+# --- ARCHIVOS TEMPORALES Y DE SISTEMA OPERATIVO ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- LOGS Y ARCHIVOS TEMPORALES ---
+*.log
+*.tmp
+
+# --- OPCIONAL: LIBRERÍAS EXTERNAS ---
+# lib/
+
+# --- OPCIONAL: MAVEN ---
+target/
+
+# ===================================================================
+# SEGURIDAD: IGNORAR CREDENCIALES DE BASE DE DATOS
+# ===================================================================
+# ¡MUY IMPORTANTE! Esto evita que se suba tu contraseña a GitHub.
+database.properties

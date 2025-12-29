@@ -30,9 +30,9 @@ public class inicio extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        TXTNAME = new javax.swing.JTextField();
+        txtUsuario = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        TXTPASWORD = new javax.swing.JPasswordField();
+        txtPassword = new javax.swing.JPasswordField();
         JLBREGISTER = new javax.swing.JLabel();
         BTNLOGIN = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -65,7 +65,7 @@ public class inicio extends javax.swing.JFrame {
         });
 
         BTNLOGIN.setBackground(new java.awt.Color(0, 153, 255));
-        BTNLOGIN.setText("INICIAR SECION");
+        BTNLOGIN.setText("INICIAR SESIÓN");
         BTNLOGIN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTNLOGINActionPerformed(evt);
@@ -84,8 +84,8 @@ public class inicio extends javax.swing.JFrame {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(TXTPASWORD)
-                            .addComponent(TXTNAME, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtPassword)
+                            .addComponent(txtUsuario, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
@@ -115,11 +115,11 @@ public class inicio extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TXTNAME, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TXTPASWORD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(JLBREGISTER)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -136,9 +136,64 @@ public class inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTNLOGINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNLOGINActionPerformed
-        PANELDEROLES ROLES=new PANELDEROLES ();
-        ROLES.setVisible(true);
+// 1. Capturamos lo que escribió el usuario
+String usuario = txtUsuario.getText();
+// Ojo: Si usas JPasswordField usa String.valueOf(txtPassword.getPassword());
+String pass = String.valueOf(txtPassword.getPassword()); 
+
+// 2. Validamos que no estén vacíos
+if (usuario.isEmpty() || pass.isEmpty()) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Por favor llene todos los campos");
+    return;
+}
+
+try {
+    // 3. Conectamos
+    MODULOSTAREAMODELAMIENTO.CConexion objetoConexion = new MODULOSTAREAMODELAMIENTO.CConexion();
+    java.sql.Connection cn = objetoConexion.establecerConexion();
+    
+    // 4. Buscamos al usuario
+    String sql = "SELECT * FROM usuarios WHERE usuario = ? AND password = ?";
+    java.sql.PreparedStatement pst = cn.prepareStatement(sql);
+    pst.setString(1, usuario);
+    pst.setString(2, pass);
+    
+    java.sql.ResultSet rs = pst.executeQuery();
+    
+    // 5. Verificamos si existe (AQUÍ ESTABA EL ERROR PROBABLEMENTE)
+    if (rs.next()) {
+        // --- DENTRO DEL IF (SOLO AQUÍ PODEMOS LEER DATOS) ---
+        
+        // A) Guardamos el usuario en la "Mochila Global" (Sesion)
+        MODULOSTAREAMODELAMIENTO.Sesion.usuarioActual = usuario;
+        
+        // B) Leemos el rol
+        String rolCapturado = rs.getString("rol");
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Bienvenido " + usuario);
+        
+        // C) Abrimos la ventana según el rol
+        if (rolCapturado.equalsIgnoreCase("Administrador")) {
+              MODULO_ROL ventana = new MODULO_ROL();
+              ventana.setVisible(true);
+        } else {
+             // Asumimos que es Docente o cualquier otro
+             // Asegúrate de que REGISTRAR_PRACTICA sea el nombre correcto de tu ventana
+             REGISTRAR_PRACTICA ventana = new REGISTRAR_PRACTICA();
+             ventana.setVisible(true);
+        }
+        
+        // D) Cerramos el Login
         this.dispose();
+        
+    } else {
+        // --- SI NO EXISTE ---
+        javax.swing.JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");
+    }
+    
+} catch (Exception e) {
+    javax.swing.JOptionPane.showMessageDialog(this, "Error en el Login: " + e.toString());
+}
     }//GEN-LAST:event_BTNLOGINActionPerformed
 
     private void JLBREGISTERMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JLBREGISTERMouseClicked
@@ -185,13 +240,13 @@ public class inicio extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNLOGIN;
     private javax.swing.JLabel JLBREGISTER;
-    private javax.swing.JTextField TXTNAME;
-    private javax.swing.JPasswordField TXTPASWORD;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPasswordField txtPassword;
+    private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

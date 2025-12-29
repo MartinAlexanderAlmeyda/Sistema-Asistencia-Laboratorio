@@ -32,8 +32,9 @@ public class MODULO_ROL extends javax.swing.JFrame {
         TXTIMAGEN2 = new javax.swing.JLabel();
         BTNREPORTE = new javax.swing.JButton();
         TXTIMAGEN = new javax.swing.JLabel();
-        BTNREPORTE1 = new javax.swing.JButton();
-        BTNGESTIONARLABORATORIO = new javax.swing.JButton();
+        btnGestionarCursos = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        BTNGESTIONARLABORATORIO1 = new javax.swing.JButton();
         TXTFONDO = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -45,10 +46,10 @@ public class MODULO_ROL extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
 
         TXTIMAGEN2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/33.png"))); // NOI18N
-        getContentPane().add(TXTIMAGEN2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, 120, 170));
+        getContentPane().add(TXTIMAGEN2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 160, 120, 170));
 
         BTNREPORTE.setBackground(new java.awt.Color(51, 204, 255));
-        BTNREPORTE.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        BTNREPORTE.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         BTNREPORTE.setForeground(new java.awt.Color(255, 255, 255));
         BTNREPORTE.setText("REALIZAR REPORTE");
         BTNREPORTE.addActionListener(new java.awt.event.ActionListener() {
@@ -56,30 +57,33 @@ public class MODULO_ROL extends javax.swing.JFrame {
                 BTNREPORTEActionPerformed(evt);
             }
         });
-        getContentPane().add(BTNREPORTE, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 250, 50));
+        getContentPane().add(BTNREPORTE, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 170, 30));
 
         TXTIMAGEN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/444.png"))); // NOI18N
-        getContentPane().add(TXTIMAGEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 170, 140, 130));
+        getContentPane().add(TXTIMAGEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 130, 130));
 
-        BTNREPORTE1.setBackground(new java.awt.Color(51, 204, 255));
-        BTNREPORTE1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        BTNREPORTE1.setForeground(new java.awt.Color(255, 255, 255));
-        BTNREPORTE1.setText("REALIZAR REPORTE");
-        getContentPane().add(BTNREPORTE1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 250, 50));
-
-        BTNGESTIONARLABORATORIO.setBackground(new java.awt.Color(51, 204, 255));
-        BTNGESTIONARLABORATORIO.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        BTNGESTIONARLABORATORIO.setForeground(new java.awt.Color(255, 255, 255));
-        BTNGESTIONARLABORATORIO.setText("GESTIONAR LABORATORIO");
-        BTNGESTIONARLABORATORIO.addActionListener(new java.awt.event.ActionListener() {
+        btnGestionarCursos.setBackground(new java.awt.Color(51, 204, 255));
+        btnGestionarCursos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnGestionarCursos.setForeground(new java.awt.Color(255, 255, 255));
+        btnGestionarCursos.setText("ASIGNAR CURSOS");
+        btnGestionarCursos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BTNGESTIONARLABORATORIOActionPerformed(evt);
+                btnGestionarCursosActionPerformed(evt);
             }
         });
-        getContentPane().add(BTNGESTIONARLABORATORIO, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 330, 350, 50));
+        getContentPane().add(btnGestionarCursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 210, 30));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/administracion (3).png"))); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, -1, -1));
+
+        BTNGESTIONARLABORATORIO1.setBackground(new java.awt.Color(51, 204, 255));
+        BTNGESTIONARLABORATORIO1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BTNGESTIONARLABORATORIO1.setForeground(new java.awt.Color(255, 255, 255));
+        BTNGESTIONARLABORATORIO1.setText("GESTIONAR LABORATORIO");
+        getContentPane().add(BTNGESTIONARLABORATORIO1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, 210, 30));
 
         TXTFONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/606b54b09207dc84eeed2ee6_background.jpeg"))); // NOI18N
-        getContentPane().add(TXTFONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 511));
+        getContentPane().add(TXTFONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -90,7 +94,6 @@ public class MODULO_ROL extends javax.swing.JFrame {
     
     newframe.setVisible(true);
     
-    //paraevitar que aparezcan dobles pestañas
     
     this.dispose();
     }//GEN-LAST:event_BTNREPORTEActionPerformed
@@ -98,6 +101,12 @@ public class MODULO_ROL extends javax.swing.JFrame {
     private void BTNGESTIONARLABORATORIOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNGESTIONARLABORATORIOActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BTNGESTIONARLABORATORIOActionPerformed
+
+    private void btnGestionarCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionarCursosActionPerformed
+       GestionarCurso newframe= new GestionarCurso();
+        newframe.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnGestionarCursosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -125,12 +134,13 @@ public class MODULO_ROL extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BTNGESTIONARLABORATORIO;
+    private javax.swing.JButton BTNGESTIONARLABORATORIO1;
     private javax.swing.JButton BTNREPORTE;
-    private javax.swing.JButton BTNREPORTE1;
     private javax.swing.JLabel TXTFONDO;
     private javax.swing.JLabel TXTIMAGEN;
     private javax.swing.JLabel TXTIMAGEN2;
+    private javax.swing.JButton btnGestionarCursos;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

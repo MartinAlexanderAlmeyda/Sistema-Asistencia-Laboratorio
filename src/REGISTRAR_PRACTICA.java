@@ -1,12 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
-/**
- *
- * @author marti
- */
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
 
     /**
@@ -15,6 +9,82 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
     public REGISTRAR_PRACTICA() {
         initComponents();
      setLocationRelativeTo(null);
+        // 1. FECHA
+        LocalDate fechaHoy = LocalDate.now();
+        DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // IMPORTANTE: Asegúrate que tu caja de texto de fecha se llame txtFecha
+        txtFecha.setText(fechaHoy.format(formatoFecha));
+        
+        // 2. HORA INICIO
+        LocalTime horaActual = LocalTime.now();
+        DateTimeFormatter formatoHora = DateTimeFormatter.ofPattern("HH:mm");
+        // Asegúrate que tu caja de hora inicio se llame txtHoraInicio
+        txtHoraInicio.setText(horaActual.format(formatoHora));
+        
+        // 3. HORA FIN (Calculamos 2 horas más tarde)
+        LocalTime horaSalida = horaActual.plusHours(2); 
+        // Asegúrate que tu caja de hora fin se llame txtHoraFin
+        txtHoraFin.setText(horaSalida.format(formatoHora));
+        // ... (Tu código de fecha y hora está arriba) ...
+
+        // --- CÓDIGO PARA JALAR EL NOMBRE DESDE LA BASE DE DATOS ---
+        try {
+            // 1. Obtenemos el usuario que inició sesión (ej: "martin")
+            String usuarioLogueado = MODULOSTAREAMODELAMIENTO.Sesion.usuarioActual;
+            
+            // 2. Conectamos a la base de datos
+            MODULOSTAREAMODELAMIENTO.CConexion objetoConexion = new MODULOSTAREAMODELAMIENTO.CConexion();
+            java.sql.Connection cn = objetoConexion.establecerConexion();
+            
+            // 3. Hacemos la consulta: "¿Cuál es el nombre_completo de este usuario?"
+            String sql = "SELECT nombre_completo FROM usuarios WHERE usuario = ?";
+            java.sql.PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, usuarioLogueado);
+            
+            java.sql.ResultSet rs = pst.executeQuery();
+            
+            if (rs.next()) {
+                // 4. SI LO ENCONTRAMOS: Jalamos el dato de la columna "nombre_completo"
+                String nombreReal = rs.getString("nombre_completo");
+                
+                // 5. Lo ponemos en la caja de texto (Asegúrate que se llame txtDocente)
+                txtDocente.setText(nombreReal);
+                
+                // (Opcional) Bloqueamos la caja para que no se pueda editar
+                txtDocente.setEditable(false);
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error al jalar el docente de la BD: " + e);
+        }
+        // --- CÓDIGO PARA CARGAR LOS CURSOS DEL DOCENTE ---
+        try {
+            // 1. Limpiamos la lista para que no tenga basura
+            cboCurso.removeAllItems();
+            cboCurso.addItem("Seleccione un curso"); 
+            
+            // 2. Recuperamos el usuario que está conectado (ej: "martin")
+            String usuarioLogueado = MODULOSTAREAMODELAMIENTO.Sesion.usuarioActual;
+            
+            // 3. Conectamos a la base de datos
+            MODULOSTAREAMODELAMIENTO.CConexion objetoConexion = new MODULOSTAREAMODELAMIENTO.CConexion();
+            java.sql.Connection cn = objetoConexion.establecerConexion();
+            
+            // 4. Buscamos SOLO los cursos que le pertenecen a este usuario
+            String sql = "SELECT nombre_curso FROM cursos_docente WHERE usuario_docente = ?";
+            java.sql.PreparedStatement pst = cn.prepareStatement(sql);
+            pst.setString(1, usuarioLogueado);
+            
+            java.sql.ResultSet rs = pst.executeQuery();
+            
+            // 5. Llenamos la lista con los resultados
+            while (rs.next()) {
+                cboCurso.addItem(rs.getString("nombre_curso"));
+            }
+            
+        } catch (Exception e) {
+            System.out.println("Error al cargar cursos: " + e);
+        }
     }
 
     /**
@@ -31,7 +101,7 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
         txtFacultad = new javax.swing.JLabel();
         cajaFacultad = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        txtNombreDocente = new javax.swing.JTextField();
+        txtDocente = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         txtTituloPractica = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -39,23 +109,23 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtFecha = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        CajaCiclo = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
-        txtCurso = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        CajaSeccion = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        CajaPractica = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         txtHoraInicio = new javax.swing.JTextField();
         txtHoraFin = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        cajaLaboratorios = new javax.swing.JComboBox<>();
         txtRegresar = new javax.swing.JButton();
         btnGuardarCambios = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        cboCurso = new javax.swing.JComboBox<>();
         txtFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -78,7 +148,12 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
 
         jLabel1.setText("DOCENTE:");
 
-        txtNombreDocente.setEnabled(false);
+        txtDocente.setEnabled(false);
+        txtDocente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDocenteActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("TITULO DE LA PRÁCTICA:");
 
@@ -97,19 +172,17 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
 
         jLabel5.setText("CICLO:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Ciclo", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" }));
+        CajaCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Ciclo", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" }));
 
         jLabel6.setText("CURSO:");
 
-        txtCurso.setEnabled(false);
-
         jLabel7.setText("SECCIÓN:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Sección", "A", "B", "C", "D", "E" }));
+        CajaSeccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Sección", "A", "B", "C", "D", "E" }));
 
         jLabel8.setText("N° PRACTICA:");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione el N°", "N°1", "N°2", "N°3", "N°4", "N°5", "N°6", "N°7", "N°8", "N°9", "N°10", "N°11", "N°12", "N°13", "N°14", "N°15", "N°16" }));
+        CajaPractica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione el N°", "N°1", "N°2", "N°3", "N°4", "N°5", "N°6", "N°7", "N°8", "N°9", "N°10", "N°11", "N°12", "N°13", "N°14", "N°15", "N°16" }));
 
         jLabel9.setText("HORA INICIO:");
 
@@ -129,8 +202,9 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
 
         jLabel11.setText("LABORATORIO O TALLER SOLICITADO:");
 
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Laboratorio", "Sala de Audiencias-(203-D)", "Automatización-(201-B)", "Laboratorio de Fisica-(204-A)", "Resistencia de Materiales-(103-D)", "Design Thinking-(202-D)", "Psicometrico 1-(203-B)", "Psicometrico 2-(302-D)", "Laboratorio de Computo 1-(206-A)", "Laboratorio de Computo 2-(205-A)", "Laboratorio de Computo 3-(202-A)", "Laboratorio de Computo 4-(201-D)", "Laboratorio de Computo 5-(301-D)", "Camara Gesell-(202-B)", "Microbiologia-Medicina-(106-A)", "Enfermeria Basica- (103-B)", "Enfermeria Especializada 1-(101-B)", "Enfermeria Especializada 2 -(102-B)", "Taller Topografia (306-C)", "Quimica y Bioquimica-(104-B)", "Biologia y Microbiologia- (105-B)", "Anatomia-(204-B)", "Consultoria Sexual y Reproductiva-(202-C)", "Obstetricia y Humanistico- (205-D)", "Dibujo-(301 y 302-D)", "Laboratorio de Redes-(201-C)", "Laboratorio de Operaciones Unitarias-(101-D)" }));
+        cajaLaboratorios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Laboratorio", "Sala de Audiencias-(203-D)", "Automatización-(201-B)", "Laboratorio de Fisica-(204-A)", "Resistencia de Materiales-(103-D)", "Design Thinking-(202-D)", "Psicometrico 1-(203-B)", "Psicometrico 2-(302-D)", "Laboratorio de Computo 1-(206-A)", "Laboratorio de Computo 2-(205-A)", "Laboratorio de Computo 3-(202-A)", "Laboratorio de Computo 4-(201-D)", "Laboratorio de Computo 5-(301-D)", "Camara Gesell-(202-B)", "Microbiologia-Medicina-(106-A)", "Enfermeria Basica- (103-B)", "Enfermeria Especializada 1-(101-B)", "Enfermeria Especializada 2 -(102-B)", "Taller Topografia (306-C)", "Quimica y Bioquimica-(104-B)", "Biologia y Microbiologia- (105-B)", "Anatomia-(204-B)", "Consultoria Sexual y Reproductiva-(202-C)", "Obstetricia y Humanistico- (205-D)", "Dibujo-(301 y 302-D)", "Laboratorio de Redes-(201-C)", "Laboratorio de Operaciones Unitarias-(101-D)" }));
 
+        txtRegresar.setBackground(new java.awt.Color(51, 102, 255));
         txtRegresar.setText("REGRESAR");
         txtRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,6 +212,7 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
             }
         });
 
+        btnGuardarCambios.setBackground(new java.awt.Color(51, 102, 255));
         btnGuardarCambios.setText("GUARDAR CAMBIOS");
         btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,7 +239,7 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
                             .addGroup(txtfondo2Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtNombreDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtDocente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(txtfondo2Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -192,28 +267,28 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(txtfondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(CajaCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cboCurso, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(txtfondo2Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CajaSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(txtfondo2Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CajaPractica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(txtfondo2Layout.createSequentialGroup()
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtHoraFin, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(42, Short.MAX_VALUE))
             .addGroup(txtfondo2Layout.createSequentialGroup()
                 .addGroup(txtfondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(txtfondo2Layout.createSequentialGroup()
                         .addGap(108, 108, 108)
                         .addComponent(jLabel11)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cajaLaboratorios, javax.swing.GroupLayout.PREFERRED_SIZE, 429, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(txtfondo2Layout.createSequentialGroup()
                         .addGap(356, 356, 356)
                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -234,25 +309,25 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
                     .addComponent(txtFacultad)
                     .addComponent(cajaFacultad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CajaCiclo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(txtfondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(CajaProgramaAcademico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6)
-                    .addComponent(txtCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cboCurso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(txtfondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txtNombreDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDocente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CajaSeccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(txtfondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtTituloPractica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(CajaPractica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25)
                 .addGroup(txtfondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -264,7 +339,7 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
                 .addGap(31, 31, 31)
                 .addGroup(txtfondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cajaLaboratorios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel12)
                 .addGroup(txtfondo2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,16 +379,81 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
     }//GEN-LAST:event_txtHoraFinActionPerformed
 
     private void txtRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRegresarActionPerformed
-         PANELDEROLES ROLES=new PANELDEROLES ();
+         inicio ROLES=new inicio();
         ROLES.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_txtRegresarActionPerformed
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
-      Asistencia_de_Alumnos newframe= new Asistencia_de_Alumnos();
-      newframe.setVisible(true);
-      this.dispose();
+      
+      // 1. RECOLECTAR DATOS 
+   
+    String facultad = cajaFacultad.getSelectedItem().toString();
+    String curso = cboCurso.getSelectedItem().toString(); 
+    String docente = txtDocente.getText();
+    String tema = txtTituloPractica.getText(); 
+    String fecha = txtFecha.getText();
+    String horaIn = txtHoraInicio.getText();
+    String horaFin = txtHoraFin.getText();
+    String ProgramaAcademico= CajaProgramaAcademico.getSelectedItem().toString();
+    String Laboratorios= cajaLaboratorios.getSelectedItem().toString();
+    String Ciclo= CajaCiclo.getSelectedItem().toString();
+    String Seccion = CajaSeccion.getSelectedItem().toString();
+    String NumeroPractica= CajaPractica.getSelectedItem().toString();
+    
+
+    try {
+        MODULOSTAREAMODELAMIENTO.CConexion objetoConexion = new MODULOSTAREAMODELAMIENTO.CConexion();
+        java.sql.Connection cn = objetoConexion.establecerConexion();
+
+        // 3. SQL ACTUALIZADO (Con todas las columnas, incluido 'ciclo')
+        String sql = "INSERT INTO practicas_laboratorio "
+                + "(facultad, curso, docente, titulo_practica, fecha, hora_inicio, hora_fin,programa, laboratorio, ciclo, seccion, num_practica) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        java.sql.PreparedStatement pst = cn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+        
+        pst.setString(1, facultad);
+        pst.setString(2, curso);
+        pst.setString(3, docente);
+        pst.setString(4, tema);
+        pst.setString(5, fecha);
+        pst.setString(6, horaIn);
+        pst.setString(7, horaFin);
+        pst.setString(8,ProgramaAcademico);
+        pst.setString(9, Laboratorios);
+        pst.setString(10, Ciclo);
+        pst.setString(11, Seccion);
+        pst.setString(12,NumeroPractica);
+        
+        
+        // 3. EJECUTAR EL GUARDADO
+        int filasAfectadas = pst.executeUpdate(); 
+
+        // 4. VERIFICAR Y PASAR AL SIGUIENTE FORMULARIO
+        if (filasAfectadas > 0) {
+            java.sql.ResultSet rs = pst.getGeneratedKeys();
+            if (rs.next()) {
+                int idGenerado = rs.getInt(1); // ¡Capturamos el ID!
+                
+                javax.swing.JOptionPane.showMessageDialog(this, "Datos guardados correctamente.");
+
+                // Pasamos el ID a la ventana de asistencia
+                Asistencia_de_Alumnos ventana2 = new Asistencia_de_Alumnos();
+                ventana2.setIdPractica(idGenerado); 
+                ventana2.setVisible(true);
+                this.dispose();
+            }
+        }
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar: " + e);
+    }
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
+
+    private void txtDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocenteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDocenteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -351,13 +491,14 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CajaCiclo;
+    private javax.swing.JComboBox<String> CajaPractica;
     private javax.swing.JComboBox<String> CajaProgramaAcademico;
+    private javax.swing.JComboBox<String> CajaSeccion;
     private javax.swing.JButton btnGuardarCambios;
     private javax.swing.JComboBox<String> cajaFacultad;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private javax.swing.JComboBox<String> jComboBox4;
+    private javax.swing.JComboBox<String> cajaLaboratorios;
+    private javax.swing.JComboBox<String> cboCurso;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -372,13 +513,12 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JTextField txtCurso;
+    private javax.swing.JTextField txtDocente;
     private javax.swing.JLabel txtFacultad;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JLabel txtFondo;
     private javax.swing.JTextField txtHoraFin;
     private javax.swing.JTextField txtHoraInicio;
-    private javax.swing.JTextField txtNombreDocente;
     private javax.swing.JButton txtRegresar;
     private javax.swing.JTextField txtTituloPractica;
     private javax.swing.JPanel txtfondo2;

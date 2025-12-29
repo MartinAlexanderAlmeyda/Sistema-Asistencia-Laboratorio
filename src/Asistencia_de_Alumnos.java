@@ -8,16 +8,45 @@
  * @author marti
  */
 public class Asistencia_de_Alumnos extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Asistencia_de_Alumnos
-     */
+     // 1. Variable para guardar el ID que viene del formulario anterior
+    int idPracticaActual = 0; 
+    private PanelLienzoFirma lienzoFirma;
+    
     public Asistencia_de_Alumnos() {
         initComponents();
         setLocationRelativeTo(null);
-    }
-   
+        
+        // --- CÓDIGO CORREGIDO EN EL CONSTRUCTOR DE Asistencia_de_Alumnos ---
 
+    // 1. Creamos el lienzo de dibujo
+    lienzoFirma = new PanelLienzoFirma();
+
+    // 2. ¡LA SOLUCIÓN!
+    // Le decimos al nuevo lienzo: "Tu tamaño ideal debe ser el mismo tamaño
+    // que el panel contenedor que Martin dibujó en el diseño".
+    lienzoFirma.setPreferredSize(panelContenedorFirmaAsistencia.getPreferredSize());
+    // Por seguridad, forzamos también el tamaño actual si ya estuviera calculado
+    if (panelContenedorFirmaAsistencia.getWidth() > 0) {
+       lienzoFirma.setSize(panelContenedorFirmaAsistencia.getSize());
+    }
+
+
+    // 3. Ahora sí lo agregamos al contenedor.
+    // Usamos BorderLayout para que rellene todo el espacio disponible.
+    panelContenedorFirmaAsistencia.setLayout(new java.awt.BorderLayout());
+    panelContenedorFirmaAsistencia.add(lienzoFirma, java.awt.BorderLayout.CENTER);
+
+    // 4. Forzamos a que el diseño se recalcule y se repinte
+    panelContenedorFirmaAsistencia.revalidate();
+    panelContenedorFirmaAsistencia.repaint();
+    }
+
+
+    // 2. Método para que el formulario anterior nos pase el ID
+    public void setIdPractica(int id) {
+        this.idPracticaActual = id;
+    }
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,10 +62,10 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         btnExportarLista = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        btnAgregarFirma = new javax.swing.JButton();
         btnRegresarLista = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        panelContenedorFirmaAsistencia = new javax.swing.JPanel();
+        btnBorrarFirmaAsis = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -105,6 +134,7 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
             jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
+        btnExportarLista.setBackground(new java.awt.Color(51, 102, 255));
         btnExportarLista.setText("EXPORTAR LISTA");
         btnExportarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,13 +144,7 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/exportar imagen.png"))); // NOI18N
 
-        btnAgregarFirma.setText("INSERTE FIRMA");
-        btnAgregarFirma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarFirmaActionPerformed(evt);
-            }
-        });
-
+        btnRegresarLista.setBackground(new java.awt.Color(51, 102, 255));
         btnRegresarLista.setText("REGRESAR ");
         btnRegresarLista.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,9 +152,28 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/subir_a_la_mano.png"))); // NOI18N
-
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/VERDADEROO REGRESO.png"))); // NOI18N
+
+        panelContenedorFirmaAsistencia.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        javax.swing.GroupLayout panelContenedorFirmaAsistenciaLayout = new javax.swing.GroupLayout(panelContenedorFirmaAsistencia);
+        panelContenedorFirmaAsistencia.setLayout(panelContenedorFirmaAsistenciaLayout);
+        panelContenedorFirmaAsistenciaLayout.setHorizontalGroup(
+            panelContenedorFirmaAsistenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 122, Short.MAX_VALUE)
+        );
+        panelContenedorFirmaAsistenciaLayout.setVerticalGroup(
+            panelContenedorFirmaAsistenciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 56, Short.MAX_VALUE)
+        );
+
+        btnBorrarFirmaAsis.setBackground(new java.awt.Color(51, 102, 255));
+        btnBorrarFirmaAsis.setText("Borrar Firma");
+        btnBorrarFirmaAsis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarFirmaAsisActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -142,21 +185,29 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 568, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(79, 79, 79))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnRegresarLista)
-                        .addGap(94, 94, 94)
-                        .addComponent(btnAgregarFirma)
-                        .addGap(108, 108, 108)
-                        .addComponent(btnExportarLista)
-                        .addGap(115, 115, 115))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(179, 179, 179)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(157, 157, 157))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnRegresarLista)
+                                .addGap(104, 104, 104))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(panelContenedorFirmaAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(88, 88, 88))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnBorrarFirmaAsis)
+                                .addGap(99, 99, 99)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnExportarLista)
+                                .addGap(115, 115, 115))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(157, 157, 157))))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,16 +216,20 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnExportarLista)
-                    .addComponent(btnAgregarFirma)
-                    .addComponent(btnRegresarLista))
-                .addGap(34, 34, 34))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnExportarLista)
+                            .addComponent(btnRegresarLista)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(panelContenedorFirmaAsistencia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBorrarFirmaAsis)))
+                .addGap(16, 16, 16))
         );
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 770, 420));
@@ -190,20 +245,70 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1AncestorAdded
 
     private void btnExportarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarListaActionPerformed
-        Reporte_Alumnos newframe= new Reporte_Alumnos();
-      newframe.setVisible(true);
-      this.dispose();
-    }//GEN-LAST:event_btnExportarListaActionPerformed
+      try { 
+          MODULOSTAREAMODELAMIENTO.CConexion objetoConexion = new MODULOSTAREAMODELAMIENTO.CConexion();
+          java.sql.Connection cn = objetoConexion.establecerConexion();
+          // Recorremos la tabla fila por fila 
+          for (int i=0;i<jTable1.getRowCount();i++){
+              // Obtenemos datos de las columnas
+              String apellidos = jTable1.getValueAt(i,1).toString();
+              String nombres = jTable1.getValueAt(i,2).toString();
+              // Leemos el checkbox
+             // 1. Leemos el valor como un objeto cualquiera
+             Object valorCelda = jTable1.getValueAt(i, 3);
 
-    private void btnAgregarFirmaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarFirmaActionPerformed
+             // 2. Verificamos: Si es nulo, es Falso. Si tiene algo, lo convertimos a boolean.
+             boolean marcado = (valorCelda != null && (boolean) valorCelda);
+
+              // 3. Ahora sí definimos el texto
+               String estado = marcado ? "Presente" : "Ausente";
+              
+              //guardamos en la base de datos
+              String sql = "INSERT INTO detalle_asistencia (id_practica,nombre_alumno,apellido_alumno,estado_asistencia)VALUES(?,?,?,?)";
+              java.sql.PreparedStatement pst = cn.prepareStatement(sql);
+              pst.setInt(1,idPracticaActual);
+              pst.setString(2,nombres);
+              pst.setString(3,apellidos);
+              pst.setString(4,estado);
+              
+              pst.executeUpdate();   
+          }
+          javax.swing.JOptionPane.showMessageDialog(this,"Lista exportada correctamente.");
+          //abrir el reporte final 
+          Reporte_Alumnos ventanaReporte= new Reporte_Alumnos();
+          ventanaReporte.cargarDatosReporte(idPracticaActual);
+          // 1. Obtenemos la imagen del lienzo
+          java.awt.Image fotoFirma = lienzoFirma.obtenerImagenFirma();
+
+        // 2. Se la pasamos al reporte usando el método nuevo que creamos
+           if (fotoFirma != null) {
+            ventanaReporte.setFirmaDocente(fotoFirma);
+           }
+
+          ventanaReporte.setVisible(true);
+          this.dispose();
+          ventanaReporte.setVisible(true);
+          this.dispose();
+      }catch (Exception e){
+          javax.swing.JOptionPane.showMessageDialog(this,"Error al exportar: "+ e);
+          
+      }
         
-    }//GEN-LAST:event_btnAgregarFirmaActionPerformed
+       
+    }//GEN-LAST:event_btnExportarListaActionPerformed
 
     private void btnRegresarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarListaActionPerformed
         REGISTRAR_PRACTICA newframe= new REGISTRAR_PRACTICA();
       newframe.setVisible(true);
       this.dispose();
     }//GEN-LAST:event_btnRegresarListaActionPerformed
+
+    private void btnBorrarFirmaAsisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarFirmaAsisActionPerformed
+       
+    if (lienzoFirma != null) {
+        lienzoFirma.limpiarCanvas();
+    }
+    }//GEN-LAST:event_btnBorrarFirmaAsisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -241,16 +346,76 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarFirma;
+    private javax.swing.JButton btnBorrarFirmaAsis;
     private javax.swing.JButton btnExportarLista;
     private javax.swing.JButton btnRegresarLista;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JPanel panelContenedorFirmaAsistencia;
     // End of variables declaration//GEN-END:variables
+// --- PEGAR AL FINAL DE Asistencia_de_Alumnos.java, ANTES DE LA ÚLTIMA LLAVE } ---
+    
+    class PanelLienzoFirma extends javax.swing.JPanel {
+        // Hacemos la imagen accesible
+        public java.awt.image.BufferedImage imagenFirma;
+        private java.awt.Graphics2D g2d;
+        private int Xantiguo, Yantiguo, Xnuevo, Ynuevo;
+
+        public PanelLienzoFirma() {
+            this.setBackground(java.awt.Color.WHITE);
+            this.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
+            
+            this.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override public void mousePressed(java.awt.event.MouseEvent e) {
+                    Xantiguo = e.getX(); Yantiguo = e.getY();
+                }
+            });
+            this.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+                @Override public void mouseDragged(java.awt.event.MouseEvent e) {
+                    Xnuevo = e.getX(); Ynuevo = e.getY();
+                    if (g2d != null) {
+                        g2d.drawLine(Xantiguo, Yantiguo, Xnuevo, Ynuevo);
+                        Xantiguo = Xnuevo; Yantiguo = Ynuevo;
+                        repaint();
+                    }
+                }
+            });
+        }
+
+        @Override protected void paintComponent(java.awt.Graphics g) {
+            super.paintComponent(g);
+            if (imagenFirma == null) {
+                 // Crear imagen del tamaño exacto del panel
+                imagenFirma = new java.awt.image.BufferedImage(getWidth(), getHeight(), java.awt.image.BufferedImage.TYPE_INT_RGB);
+                g2d = imagenFirma.createGraphics();
+                g2d.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON);
+                // Rellenar de blanco inicialmente
+                g2d.setColor(java.awt.Color.WHITE);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+                // Configurar pincel negro
+                g2d.setColor(java.awt.Color.BLACK);
+                g2d.setStroke(new java.awt.BasicStroke(2f));
+            }
+            g.drawImage(imagenFirma, 0, 0, null);
+        }
+        
+        public void limpiarCanvas() {
+            if (g2d != null) {
+                g2d.setColor(java.awt.Color.WHITE);
+                g2d.fillRect(0, 0, getWidth(), getHeight());
+                g2d.setColor(java.awt.Color.BLACK);
+                repaint();
+            }
+        }
+        
+        // MÉTODO NUEVO IMPORTANTE: Para sacar la "foto" de la firma
+        public java.awt.Image obtenerImagenFirma() {
+            return this.imagenFirma;
+        }
+    }
 }
