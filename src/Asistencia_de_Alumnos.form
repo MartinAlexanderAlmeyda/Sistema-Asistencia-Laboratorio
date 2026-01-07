@@ -141,91 +141,13 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="jTable1">
+            <Component class="javax.swing.JTable" name="tblAlumnos">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="25">
-                    <Column editable="true" title="N&#xb0;" type="java.lang.Object">
-                      <Data value="1"/>
-                      <Data value="2"/>
-                      <Data value="3"/>
-                      <Data value="4"/>
-                      <Data value="5"/>
-                      <Data value="6"/>
-                      <Data value="7"/>
-                      <Data value="8"/>
-                      <Data value="9"/>
-                      <Data value="10"/>
-                      <Data value="11"/>
-                      <Data value="12"/>
-                      <Data value="13"/>
-                      <Data value="14"/>
-                      <Data value="15"/>
-                      <Data value="16"/>
-                      <Data value="17"/>
-                      <Data value="18"/>
-                      <Data value="19"/>
-                      <Data value="20"/>
-                      <Data value="21"/>
-                      <Data value="22"/>
-                      <Data value="23"/>
-                      <Data value="24"/>
-                      <Data value="25"/>
-                    </Column>
-                    <Column editable="true" title="Apellidos" type="java.lang.String">
-                      <Data value="Almeyda Tataje"/>
-                      <Data value="Saavedra Martinez"/>
-                      <Data value="Magallanes Alejos"/>
-                      <Data value="Segovia Avalos"/>
-                      <Data value="Astorga Elguera"/>
-                      <Data value="Luna Lopez"/>
-                      <Data value="More Quispe"/>
-                      <Data value="Saravia Saravia"/>
-                      <Data value="Cabezas Bautista"/>
-                      <Data value="Soria Guillen"/>
-                      <Data value="Romo Mendoza"/>
-                      <Data value="Siguas Saravia"/>
-                      <Data value="Quispe Pacheco"/>
-                      <Data value="Tasayco Torres"/>
-                      <Data value="Ramos Quispe"/>
-                      <Data value="Grimaldo Mesias "/>
-                      <Data value="Jacobo Saravia"/>
-                      <Data value="Quispe Diaz"/>
-                      <Data value="Tapia Felipa"/>
-                      <Data value="Marcelo Torres"/>
-                      <Data value="Gonzales Chavez"/>
-                      <Data value="Enrriquez Salas"/>
-                      <Data value="Manrique Tipico"/>
-                      <Data value="Campos Villa"/>
-                      <Data value="Achuy Balboa"/>
-                    </Column>
-                    <Column editable="true" title="Nombres" type="java.lang.String">
-                      <Data value="Martin"/>
-                      <Data value="Luciana"/>
-                      <Data value="Alex"/>
-                      <Data value="Ivette"/>
-                      <Data value="Leonardo"/>
-                      <Data value="Luis"/>
-                      <Data value="Luis"/>
-                      <Data value="Anthony"/>
-                      <Data value="Yeferson"/>
-                      <Data value="Daniel"/>
-                      <Data value="Jeremias"/>
-                      <Data value="Duvan"/>
-                      <Data value="Benjamin"/>
-                      <Data value="Anderson"/>
-                      <Data value="Cristhian "/>
-                      <Data value="Luigi Angelo"/>
-                      <Data value="Alejandra"/>
-                      <Data value="Alessandro"/>
-                      <Data value="Angel"/>
-                      <Data value="Manuel"/>
-                      <Data value="Pool"/>
-                      <Data value="Marlon"/>
-                      <Data value="Cecilia"/>
-                      <Data value="Jhon"/>
-                      <Data value="Marcelo"/>
-                    </Column>
+                  <Table columnCount="4" rowCount="0">
+                    <Column editable="true" title="N&#xb0;" type="java.lang.Object"/>
+                    <Column editable="true" title="Apellidos" type="java.lang.String"/>
+                    <Column editable="true" title="Nombres" type="java.lang.String"/>
                     <Column editable="true" title="Asistencia" type="java.lang.Boolean"/>
                   </Table>
                 </Property>
@@ -259,7 +181,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jTable1AncestorAdded"/>
+                <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="tblAlumnosAncestorAdded"/>
               </Events>
             </Component>
           </SubComponents>

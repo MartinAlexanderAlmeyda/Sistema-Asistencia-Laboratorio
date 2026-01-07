@@ -57,7 +57,7 @@ public class GestionarCurso extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(0, 153, 204));
+        btnEliminar.setBackground(new java.awt.Color(102, 153, 255));
         btnEliminar.setText("ELIMINAR CURSO");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,9 +113,9 @@ public class GestionarCurso extends javax.swing.JFrame {
                                     .addComponent(cboDocente, 0, 250, Short.MAX_VALUE)
                                     .addComponent(txtNombreCurso)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(31, 31, 31)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(65, 65, 65)
+                                .addGap(49, 49, 49)
+                                .addComponent(btnEliminar)
+                                .addGap(60, 60, 60)
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(70, Short.MAX_VALUE))
         );

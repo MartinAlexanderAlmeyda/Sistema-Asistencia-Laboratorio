@@ -1,13 +1,47 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JOptionPane;
+import MODULOSTAREAMODELAMIENTO.CConexion;
 
-/**
- *
- * @author marti
- */
 public class Asistencia_de_Alumnos extends javax.swing.JFrame {
+  
+// --- ESTO VA EN LISTA DE ALUMNOS (Formulario 2) ---
+
+public void cargarAlumnosPorCurso(String cursoSeleccionado) {
+    
+    // 1. Conexión estándar
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblAlumnos.getModel();
+    modelo.setRowCount(0);
+    
+    MODULOSTAREAMODELAMIENTO.CConexion conObj = new MODULOSTAREAMODELAMIENTO.CConexion();
+    java.sql.Connection conect = conObj.establecerConexion();
+    
+    // 2. LA CONSULTA BLINDADA (Soluciona el problema de Quimica vs QUIMICA)
+    // Usamos UPPER() para convertir todo a mayúsculas temporalmente al comparar
+    String sql = "SELECT apellidos, nombres FROM lista_alumnos WHERE UPPER(curso) LIKE UPPER(?)";
+    
+    try {
+        java.sql.PreparedStatement pst = conect.prepareStatement(sql);
+        
+        // Agregamos "%" para que funcione incluso si hay espacios invisibles
+        pst.setString(1, "%" + cursoSeleccionado.trim() + "%");
+        
+        java.sql.ResultSet rs = pst.executeQuery();
+        
+        int contador = 1;
+        while(rs.next()) {
+            String apellidos = rs.getString("apellidos");
+            String nombres = rs.getString("nombres");
+            modelo.addRow(new Object[]{ contador, apellidos, nombres, false });
+            contador++;
+        }
+        conect.close();
+        
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    }
+}
+
      // 1. Variable para guardar el ID que viene del formulario anterior
     int idPracticaActual = 0; 
     private PanelLienzoFirma lienzoFirma;
@@ -59,7 +93,7 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblAlumnos = new javax.swing.JTable();
         btnExportarLista = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         btnRegresarLista = new javax.swing.JButton();
@@ -77,33 +111,9 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(111, 172, 199));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LISTA DE ALUMNOS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Black", 1, 24))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Almeyda Tataje", "Martin", null},
-                {"2", "Saavedra Martinez", "Luciana", null},
-                {"3", "Magallanes Alejos", "Alex", null},
-                {"4", "Segovia Avalos", "Ivette", null},
-                {"5", "Astorga Elguera", "Leonardo", null},
-                {"6", "Luna Lopez", "Luis", null},
-                {"7", "More Quispe", "Luis", null},
-                {"8", "Saravia Saravia", "Anthony", null},
-                {"9", "Cabezas Bautista", "Yeferson", null},
-                {"10", "Soria Guillen", "Daniel", null},
-                {"11", "Romo Mendoza", "Jeremias", null},
-                {"12", "Siguas Saravia", "Duvan", null},
-                {"13", "Quispe Pacheco", "Benjamin", null},
-                {"14", "Tasayco Torres", "Anderson", null},
-                {"15", "Ramos Quispe", "Cristhian ", null},
-                {"16", "Grimaldo Mesias ", "Luigi Angelo", null},
-                {"17", "Jacobo Saravia", "Alejandra", null},
-                {"18", "Quispe Diaz", "Alessandro", null},
-                {"19", "Tapia Felipa", "Angel", null},
-                {"20", "Marcelo Torres", "Manuel", null},
-                {"21", "Gonzales Chavez", "Pool", null},
-                {"22", "Enrriquez Salas", "Marlon", null},
-                {"23", "Manrique Tipico", "Cecilia", null},
-                {"24", "Campos Villa", "Jhon", null},
-                {"25", "Achuy Balboa", "Marcelo", null}
+
             },
             new String [] {
                 "N°", "Apellidos", "Nombres", "Asistencia"
@@ -117,21 +127,21 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setAutoscrolls(false);
-        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tblAlumnos.setAutoscrolls(false);
+        tblAlumnos.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable1AncestorAdded(evt);
+                tblAlumnosAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(20);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(40);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(50);
+        jScrollPane1.setViewportView(tblAlumnos);
+        if (tblAlumnos.getColumnModel().getColumnCount() > 0) {
+            tblAlumnos.getColumnModel().getColumn(0).setMinWidth(20);
+            tblAlumnos.getColumnModel().getColumn(0).setPreferredWidth(40);
+            tblAlumnos.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
         btnExportarLista.setBackground(new java.awt.Color(51, 102, 255));
@@ -240,22 +250,23 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+    private void tblAlumnosAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblAlumnosAncestorAdded
 
-    }//GEN-LAST:event_jTable1AncestorAdded
+    }//GEN-LAST:event_tblAlumnosAncestorAdded
 
     private void btnExportarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarListaActionPerformed
-      try { 
+
+        try { 
           MODULOSTAREAMODELAMIENTO.CConexion objetoConexion = new MODULOSTAREAMODELAMIENTO.CConexion();
           java.sql.Connection cn = objetoConexion.establecerConexion();
           // Recorremos la tabla fila por fila 
-          for (int i=0;i<jTable1.getRowCount();i++){
+          for (int i=0;i<tblAlumnos.getRowCount();i++){
               // Obtenemos datos de las columnas
-              String apellidos = jTable1.getValueAt(i,1).toString();
-              String nombres = jTable1.getValueAt(i,2).toString();
+              String apellidos = tblAlumnos.getValueAt(i,1).toString();
+              String nombres = tblAlumnos.getValueAt(i,2).toString();
               // Leemos el checkbox
              // 1. Leemos el valor como un objeto cualquiera
-             Object valorCelda = jTable1.getValueAt(i, 3);
+             Object valorCelda = tblAlumnos.getValueAt(i, 3);
 
              // 2. Verificamos: Si es nulo, es Falso. Si tiene algo, lo convertimos a boolean.
              boolean marcado = (valorCelda != null && (boolean) valorCelda);
@@ -355,8 +366,8 @@ public class Asistencia_de_Alumnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JPanel panelContenedorFirmaAsistencia;
+    private javax.swing.JTable tblAlumnos;
     // End of variables declaration//GEN-END:variables
 // --- PEGAR AL FINAL DE Asistencia_de_Alumnos.java, ANTES DE LA ÚLTIMA LLAVE } ---
     

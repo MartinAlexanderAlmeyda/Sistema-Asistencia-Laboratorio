@@ -1,9 +1,30 @@
 
 import static java.awt.print.Printable.NO_SUCH_PAGE;
 import static java.awt.print.Printable.PAGE_EXISTS;
+import javax.swing.table.DefaultTableModel;
 
 
 public class Reporte_Alumnos extends javax.swing.JFrame {
+    // EN REPORTES.JAVA
+public void recibirListaAlumnos(javax.swing.table.DefaultTableModel modeloOrigen) {
+    DefaultTableModel modeloReporte = (DefaultTableModel) tblReporte.getModel(); // Tu tabla del reporte final
+    modeloReporte.setRowCount(0); // Limpiar
+    
+    // Recorremos el modelo que nos llega de la ventana anterior
+    for (int i = 0; i < modeloOrigen.getRowCount(); i++) {
+        Object numero = modeloOrigen.getValueAt(i, 0);
+        Object apellidos = modeloOrigen.getValueAt(i, 1);
+        Object nombres = modeloOrigen.getValueAt(i, 2);
+        Boolean asistencia = (Boolean) modeloOrigen.getValueAt(i, 3);
+        
+        // Aquí decides cómo mostrarlo en el reporte. 
+        // Si quieres que salga igual con check, pasas el Boolean.
+        // Si quieres que diga "ASISTIÓ" o "FALTA", usas un if:
+        String estado = asistencia ? "ASISTIÓ" : "FALTA"; 
+        
+        modeloReporte.addRow(new Object[]{ numero, apellidos, nombres, estado });
+    }
+}
 
     public Reporte_Alumnos() {
         initComponents();
@@ -87,7 +108,7 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
         txtSeccion = new javax.swing.JTextField();
         txtLaboratorio = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblReporte = new javax.swing.JTable();
         FirmaDocente = new javax.swing.JLabel();
         lblFirmaImagen = new javax.swing.JLabel();
         btnImprimir = new javax.swing.JButton();
@@ -238,34 +259,9 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
 
         jScrollPane1.setBorder(null);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblReporte.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "Almeyda Tataje", "Martin", null},
-                {"2", "Saavedra  Martinez", "Luciana", null},
-                {"3", "Magallanes  Alejos", "Alex", null},
-                {"4", "Segovia  Avalos", "Ivette", null},
-                {"5", "Astorga  Elguera", "Leonardo", null},
-                {"6", "Luna  Lopez", "Luis", null},
-                {"7", "More  Quispe", "Luis", null},
-                {"8", "Saravia  Saravia", "Anthony", null},
-                {"9", "Cabezas  Bautista", "Yeferson", null},
-                {"10", "Soria  Guillen", "Daniel", null},
-                {"11", "Romo  Mendoza", "Jeremias", null},
-                {"12", "Siguas  Saravia", "Duvan", null},
-                {"13", "Quispe  Pacheco", "Benjamin", null},
-                {"14", "Tasayco  Torres", "Anderson", null},
-                {"15", "Ramos  Quispe", "Cristhian ", null},
-                {"16", "Grimaldo  Mesias ", "Luigi Angelo", null},
-                {"17", "Jacobo  Saravia", "Alejandra", null},
-                {"18", "Quispe  Diaz", "Alessandro", null},
-                {"19", "Tapia  Felipa", "Angel", null},
-                {"20", "Marcelo  Torres", "Manuel", null},
-                {"21", "Gonzales  Chavez", "Pool", null},
-                {"22", "Enrriquez  Salas", "Marlon", null},
-                {"23", "Manrique  Tipico", "Cecilia", null},
-                {"24", "Achuy  Balboa", "Marcelo", null},
-                {"25", "Lira  Solorzano", "Katherine", null},
-                {"26", "Campos  Villa", "Jhon ",  new Boolean(false)}
+
             },
             new String [] {
                 "N°", "Apellidos", "Nombres", "Asistencia"
@@ -279,33 +275,33 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
-        jTable1.setAutoscrolls(false);
-        jTable1.setEnabled(false);
-        jTable1.setFillsViewportHeight(true);
-        jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
+        tblReporte.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_LAST_COLUMN);
+        tblReporte.setAutoscrolls(false);
+        tblReporte.setEnabled(false);
+        tblReporte.setFillsViewportHeight(true);
+        tblReporte.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jTable1AncestorAdded(evt);
+                tblReporteAncestorAdded(evt);
             }
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
             }
         });
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(60);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(65);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(70);
-            jTable1.getColumnModel().getColumn(1).setMinWidth(200);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(200);
-            jTable1.getColumnModel().getColumn(1).setMaxWidth(220);
-            jTable1.getColumnModel().getColumn(2).setMinWidth(150);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(150);
-            jTable1.getColumnModel().getColumn(2).setMaxWidth(170);
-            jTable1.getColumnModel().getColumn(3).setMinWidth(90);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(3).setMaxWidth(110);
+        jScrollPane1.setViewportView(tblReporte);
+        if (tblReporte.getColumnModel().getColumnCount() > 0) {
+            tblReporte.getColumnModel().getColumn(0).setMinWidth(60);
+            tblReporte.getColumnModel().getColumn(0).setPreferredWidth(65);
+            tblReporte.getColumnModel().getColumn(0).setMaxWidth(70);
+            tblReporte.getColumnModel().getColumn(1).setMinWidth(200);
+            tblReporte.getColumnModel().getColumn(1).setPreferredWidth(200);
+            tblReporte.getColumnModel().getColumn(1).setMaxWidth(220);
+            tblReporte.getColumnModel().getColumn(2).setMinWidth(150);
+            tblReporte.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tblReporte.getColumnModel().getColumn(2).setMaxWidth(170);
+            tblReporte.getColumnModel().getColumn(3).setMinWidth(90);
+            tblReporte.getColumnModel().getColumn(3).setPreferredWidth(100);
+            tblReporte.getColumnModel().getColumn(3).setMaxWidth(110);
         }
 
         FirmaDocente.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -459,7 +455,7 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
 
         Fondo2.setViewportView(panelReporteCompleto);
 
-        getContentPane().add(Fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 770, 300));
+        getContentPane().add(Fondo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 770, 310));
 
         btnImprimir.setBackground(new java.awt.Color(51, 102, 255));
         btnImprimir.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -505,9 +501,9 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCursoActionPerformed
 
-    private void jTable1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jTable1AncestorAdded
+    private void tblReporteAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_tblReporteAncestorAdded
 
-    }//GEN-LAST:event_jTable1AncestorAdded
+    }//GEN-LAST:event_tblReporteAncestorAdded
 
     private void txtFacultadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFacultadActionPerformed
         // TODO add your handling code here:
@@ -525,10 +521,10 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
         // ... (resto del código del botón: if (job.printDialog()) ...) ...
     try {
         // 1. FORZAR LÍNEAS NEGRAS EN LA TABLA
-        jTable1.setShowGrid(true);
-        jTable1.setGridColor(java.awt.Color.BLACK);
+        tblReporte.setShowGrid(true);
+        tblReporte.setGridColor(java.awt.Color.BLACK);
         
-        jTable1.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
+        tblReporte.getTableHeader().setFont(new java.awt.Font("SansSerif", java.awt.Font.BOLD, 12));
 
         // 2. PREPARAR LA IMPRESIÓN DEL PANEL COMPLETO
         java.awt.print.PrinterJob job = java.awt.print.PrinterJob.getPrinterJob();
@@ -686,7 +682,7 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
             java.sql.ResultSet rs2 = pst2.executeQuery();
             
            
-            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) jTable1.getModel();
+            javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblReporte.getModel();
             modelo.setRowCount(0); 
             
           
@@ -736,11 +732,11 @@ public class Reporte_Alumnos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JLabel lblFirmaImagen;
     private javax.swing.JPanel panelReporteCompleto;
+    private javax.swing.JTable tblReporte;
     private javax.swing.JTextField txtCiclo;
     private javax.swing.JTextField txtCurso;
     private javax.swing.JTextField txtDocente;

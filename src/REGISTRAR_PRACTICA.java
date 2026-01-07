@@ -173,6 +173,11 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
         jLabel5.setText("CICLO:");
 
         CajaCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Ciclo", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" }));
+        CajaCiclo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CajaCicloActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("CURSO:");
 
@@ -385,32 +390,32 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRegresarActionPerformed
 
     private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
-      
-      // 1. RECOLECTAR DATOS 
-   
+
+    // --- 1. RECOLECTAR DATOS DEL FORMULARIO ---
     String facultad = cajaFacultad.getSelectedItem().toString();
+    // Asegúrate de usar el nombre correcto de tu combo (cboCurso o cmbCurso)
     String curso = cboCurso.getSelectedItem().toString(); 
     String docente = txtDocente.getText();
     String tema = txtTituloPractica.getText(); 
     String fecha = txtFecha.getText();
     String horaIn = txtHoraInicio.getText();
     String horaFin = txtHoraFin.getText();
-    String ProgramaAcademico= CajaProgramaAcademico.getSelectedItem().toString();
-    String Laboratorios= cajaLaboratorios.getSelectedItem().toString();
-    String Ciclo= CajaCiclo.getSelectedItem().toString();
+    String ProgramaAcademico = CajaProgramaAcademico.getSelectedItem().toString();
+    String Laboratorios = cajaLaboratorios.getSelectedItem().toString();
+    String Ciclo = CajaCiclo.getSelectedItem().toString();
     String Seccion = CajaSeccion.getSelectedItem().toString();
-    String NumeroPractica= CajaPractica.getSelectedItem().toString();
-    
+    String NumeroPractica = CajaPractica.getSelectedItem().toString();
 
+    // --- 2. GUARDAR EN BASE DE DATOS ---
     try {
         MODULOSTAREAMODELAMIENTO.CConexion objetoConexion = new MODULOSTAREAMODELAMIENTO.CConexion();
         java.sql.Connection cn = objetoConexion.establecerConexion();
 
-        // 3. SQL ACTUALIZADO (Con todas las columnas, incluido 'ciclo')
         String sql = "INSERT INTO practicas_laboratorio "
-                + "(facultad, curso, docente, titulo_practica, fecha, hora_inicio, hora_fin,programa, laboratorio, ciclo, seccion, num_practica) "
+                + "(facultad, curso, docente, titulo_practica, fecha, hora_inicio, hora_fin, programa, laboratorio, ciclo, seccion, num_practica) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         
+        // Preparamos para recibir el ID generado automáticamente
         java.sql.PreparedStatement pst = cn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
         
         pst.setString(1, facultad);
@@ -420,40 +425,59 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
         pst.setString(5, fecha);
         pst.setString(6, horaIn);
         pst.setString(7, horaFin);
-        pst.setString(8,ProgramaAcademico);
+        pst.setString(8, ProgramaAcademico);
         pst.setString(9, Laboratorios);
         pst.setString(10, Ciclo);
         pst.setString(11, Seccion);
-        pst.setString(12,NumeroPractica);
+        pst.setString(12, NumeroPractica);
         
-        
-        // 3. EJECUTAR EL GUARDADO
         int filasAfectadas = pst.executeUpdate(); 
 
-        // 4. VERIFICAR Y PASAR AL SIGUIENTE FORMULARIO
+        // --- 3. SI SE GUARDÓ, ABRIMOS LA VENTANA (UNA SOLA VEZ) ---
         if (filasAfectadas > 0) {
             java.sql.ResultSet rs = pst.getGeneratedKeys();
+            
             if (rs.next()) {
-                int idGenerado = rs.getInt(1); // ¡Capturamos el ID!
+                int idGenerado = rs.getInt(1); // Capturamos el ID
                 
                 javax.swing.JOptionPane.showMessageDialog(this, "Datos guardados correctamente.");
 
-                // Pasamos el ID a la ventana de asistencia
-                Asistencia_de_Alumnos ventana2 = new Asistencia_de_Alumnos();
-                ventana2.setIdPractica(idGenerado); 
-                ventana2.setVisible(true);
+                // Creamos la instancia de la siguiente ventana
+                Asistencia_de_Alumnos ventanaSiguiente = new Asistencia_de_Alumnos();
+                
+                // LE PASAMOS TODO LO NECESARIO:
+                
+                // A) El ID para guardar la asistencia después
+                ventanaSiguiente.setIdPractica(idGenerado); 
+                
+                // B) El Curso para que cargue la lista VISUALMENTE
+                ventanaSiguiente.cargarAlumnosPorCurso(curso); 
+                
+                // C) OPCIONAL: Si necesitas pasar datos de cabecera para el reporte final,
+                // puedes guardarlos en variables globales de ventanaSiguiente aquí mismo.
+                // Ejemplo: ventanaSiguiente.g_docente = docente;
+                
+                // Mostramos la ventana UNICA y cerramos esta
+                ventanaSiguiente.setVisible(true);
                 this.dispose();
             }
         }
+        cn.close();
 
     } catch (Exception e) {
         javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar: " + e);
     }
+
     }//GEN-LAST:event_btnGuardarCambiosActionPerformed
+
 
     private void txtDocenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDocenteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDocenteActionPerformed
+
+    private void CajaCicloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CajaCicloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CajaCicloActionPerformed
 
     /**
      * @param args the command line arguments

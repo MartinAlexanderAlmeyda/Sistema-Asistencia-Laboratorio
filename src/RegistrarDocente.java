@@ -7,12 +7,12 @@
  *
  * @author USUARIO
  */
-public class registrarusuario extends javax.swing.JFrame {
+public class RegistrarDocente extends javax.swing.JFrame {
 
     /**
      * Creates new form registrarusuario
      */
-    public registrarusuario() {
+    public RegistrarDocente() {
         initComponents();
          setLocationRelativeTo(null);
     }
@@ -49,7 +49,7 @@ public class registrarusuario extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("SISTEMA DE ASISTENCIA ");
+        jLabel3.setText("REGISTRAR DOCENTE  ");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -68,7 +68,7 @@ public class registrarusuario extends javax.swing.JFrame {
             }
         });
 
-        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione Rol", "Docente", "Administrador" }));
+        cbxRol.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione Rol", "Docente", " " }));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -105,9 +105,7 @@ public class registrarusuario extends javax.swing.JFrame {
                             .addComponent(txtNuevoUsuario)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 12, Short.MAX_VALUE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2))
+                                .addComponent(jLabel2)
                                 .addGap(8, 8, 8))
                             .addComponent(txtNombreCompleto)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -117,6 +115,10 @@ public class registrarusuario extends javax.swing.JFrame {
                                     .addComponent(jLabel7))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addGap(55, 55, 55))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(77, 77, 77))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,9 +158,10 @@ public class registrarusuario extends javax.swing.JFrame {
 
     private void BTNREGISActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNREGISActionPerformed
      // 1. Capturamos los datos (Ahora son 4 cosas)
+ String Rol = cbxRol.getSelectedItem().toString();   
 String usuario = txtNuevoUsuario.getText();
 String pass = txtNuevoPass.getText(); // O getPassword si es pass field
-String rol = cbxRol.getSelectedItem().toString();
+
 String nombreReal = txtNombreCompleto.getText(); 
 
 // 2. Validamos
@@ -178,7 +181,7 @@ try {
     
     pst.setString(1, usuario);
     pst.setString(2, pass);
-    pst.setString(3, rol);
+    pst.setString(3, Rol);
     pst.setString(4, nombreReal); 
     
     pst.executeUpdate();
@@ -193,7 +196,7 @@ try {
 } catch (Exception e) {
     javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar: " + e.toString());
 }
-        inicio login=new inicio();
+        MODULO_ROL login=new MODULO_ROL();
         login.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_BTNREGISActionPerformed
@@ -219,20 +222,21 @@ try {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(registrarusuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(registrarusuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(registrarusuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(registrarusuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarDocente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new registrarusuario().setVisible(true);
+                new RegistrarDocente().setVisible(true);
             }
         });
     }

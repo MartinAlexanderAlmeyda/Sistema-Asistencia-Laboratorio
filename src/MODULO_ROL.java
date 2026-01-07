@@ -35,6 +35,7 @@ public class MODULO_ROL extends javax.swing.JFrame {
         btnGestionarCursos = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         BTNGESTIONARLABORATORIO1 = new javax.swing.JButton();
+        BTNREGRESAR = new javax.swing.JButton();
         TXTFONDO = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,10 +58,10 @@ public class MODULO_ROL extends javax.swing.JFrame {
                 BTNREPORTEActionPerformed(evt);
             }
         });
-        getContentPane().add(BTNREPORTE, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 170, 30));
+        getContentPane().add(BTNREPORTE, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 330, 170, 40));
 
         TXTIMAGEN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/444.png"))); // NOI18N
-        getContentPane().add(TXTIMAGEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 180, 130, 130));
+        getContentPane().add(TXTIMAGEN, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 190, 130, 130));
 
         btnGestionarCursos.setBackground(new java.awt.Color(51, 204, 255));
         btnGestionarCursos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -71,18 +72,34 @@ public class MODULO_ROL extends javax.swing.JFrame {
                 btnGestionarCursosActionPerformed(evt);
             }
         });
-        getContentPane().add(btnGestionarCursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 210, 30));
+        getContentPane().add(btnGestionarCursos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, 210, 40));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/administracion (3).png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 200, -1, -1));
 
         BTNGESTIONARLABORATORIO1.setBackground(new java.awt.Color(51, 204, 255));
         BTNGESTIONARLABORATORIO1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         BTNGESTIONARLABORATORIO1.setForeground(new java.awt.Color(255, 255, 255));
-        BTNGESTIONARLABORATORIO1.setText("GESTIONAR LABORATORIO");
-        getContentPane().add(BTNGESTIONARLABORATORIO1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 330, 210, 30));
+        BTNGESTIONARLABORATORIO1.setText("GESTIONAR DOCENTE");
+        BTNGESTIONARLABORATORIO1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNGESTIONARLABORATORIO1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BTNGESTIONARLABORATORIO1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, 210, 40));
 
-        TXTFONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/606b54b09207dc84eeed2ee6_background.jpeg"))); // NOI18N
+        BTNREGRESAR.setBackground(new java.awt.Color(51, 204, 255));
+        BTNREGRESAR.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        BTNREGRESAR.setForeground(new java.awt.Color(255, 255, 255));
+        BTNREGRESAR.setText("REGRESAR");
+        BTNREGRESAR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNREGRESARActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BTNREGRESAR, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 120, 30));
+
+        TXTFONDO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fondo.png"))); // NOI18N
         getContentPane().add(TXTFONDO, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 470));
 
         pack();
@@ -107,6 +124,19 @@ public class MODULO_ROL extends javax.swing.JFrame {
         newframe.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnGestionarCursosActionPerformed
+
+    private void BTNGESTIONARLABORATORIO1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNGESTIONARLABORATORIO1ActionPerformed
+       
+         RegistrarDocente login=new RegistrarDocente();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BTNGESTIONARLABORATORIO1ActionPerformed
+
+    private void BTNREGRESARActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNREGRESARActionPerformed
+       inicio login=new inicio();
+        login.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BTNREGRESARActionPerformed
 
     /**
      * @param args the command line arguments
@@ -135,6 +165,7 @@ public class MODULO_ROL extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNGESTIONARLABORATORIO1;
+    private javax.swing.JButton BTNREGRESAR;
     private javax.swing.JButton BTNREPORTE;
     private javax.swing.JLabel TXTFONDO;
     private javax.swing.JLabel TXTIMAGEN;
