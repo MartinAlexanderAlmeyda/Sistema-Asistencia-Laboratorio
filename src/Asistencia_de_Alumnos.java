@@ -108,8 +108,8 @@ public void cargarAlumnosPorCurso(String cursoSeleccionado) {
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_uai123456789.png"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, 160, 60));
 
-        jPanel1.setBackground(new java.awt.Color(111, 172, 199));
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LISTA DE ALUMNOS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Black", 1, 24))); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(0,0,0,100));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "LISTA DE ALUMNOS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI Black", 0, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
         tblAlumnos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

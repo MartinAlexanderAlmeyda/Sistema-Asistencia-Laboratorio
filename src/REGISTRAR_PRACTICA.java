@@ -134,9 +134,10 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/logo_uai123456789.png"))); // NOI18N
         getContentPane().add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 20, 170, 60));
 
-        txtfondo2.setBackground(new java.awt.Color(111, 172, 199));
-        txtfondo2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "FICHA DE ASISTENCIA DE PRACTICAS DE LABORATORIO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Swis721 Lt BT", 1, 18))); // NOI18N
+        txtfondo2.setBackground(new java.awt.Color(0,0,0,100));
+        txtfondo2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "FICHA DE ASISTENCIA DE PRACTICAS DE LABORATORIO", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Swis721 Lt BT", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        txtFacultad.setForeground(new java.awt.Color(255, 255, 255));
         txtFacultad.setText("FACULTAD:");
 
         cajaFacultad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Facultad", "FICA (Facultad de Ingenieria, Ciencias y Administración)", "FCS (Facultad de Ciencias de la Salud)" }));
@@ -146,6 +147,7 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("DOCENTE:");
 
         txtDocente.setEnabled(false);
@@ -155,12 +157,15 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("TITULO DE LA PRÁCTICA:");
 
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("PROGRAMA ACADEMICO:");
 
         CajaProgramaAcademico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ingenieria de Sistemas" }));
 
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("FECHA DE PRACTICA:");
 
         txtFecha.setEnabled(false);
@@ -170,6 +175,7 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("CICLO:");
 
         CajaCiclo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Ciclo", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X" }));
@@ -179,18 +185,23 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("CURSO:");
 
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("SECCIÓN:");
 
         CajaSeccion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Sección", "A", "B", "C", "D", "E" }));
 
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("N° PRACTICA:");
 
         CajaPractica.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione el N°", "N°1", "N°2", "N°3", "N°4", "N°5", "N°6", "N°7", "N°8", "N°9", "N°10", "N°11", "N°12", "N°13", "N°14", "N°15", "N°16" }));
 
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("HORA INICIO:");
 
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("HORA FIN:");
 
         txtHoraInicio.addActionListener(new java.awt.event.ActionListener() {
@@ -205,11 +216,13 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("LABORATORIO O TALLER SOLICITADO:");
 
         cajaLaboratorios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione Laboratorio", "Sala de Audiencias-(203-D)", "Automatización-(201-B)", "Laboratorio de Fisica-(204-A)", "Resistencia de Materiales-(103-D)", "Design Thinking-(202-D)", "Psicometrico 1-(203-B)", "Psicometrico 2-(302-D)", "Laboratorio de Computo 1-(206-A)", "Laboratorio de Computo 2-(205-A)", "Laboratorio de Computo 3-(202-A)", "Laboratorio de Computo 4-(201-D)", "Laboratorio de Computo 5-(301-D)", "Camara Gesell-(202-B)", "Microbiologia-Medicina-(106-A)", "Enfermeria Basica- (103-B)", "Enfermeria Especializada 1-(101-B)", "Enfermeria Especializada 2 -(102-B)", "Taller Topografia (306-C)", "Quimica y Bioquimica-(104-B)", "Biologia y Microbiologia- (105-B)", "Anatomia-(204-B)", "Consultoria Sexual y Reproductiva-(202-C)", "Obstetricia y Humanistico- (205-D)", "Dibujo-(301 y 302-D)", "Laboratorio de Redes-(201-C)", "Laboratorio de Operaciones Unitarias-(101-D)" }));
 
         txtRegresar.setBackground(new java.awt.Color(51, 102, 255));
+        txtRegresar.setForeground(new java.awt.Color(255, 255, 255));
         txtRegresar.setText("REGRESAR");
         txtRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +231,7 @@ public class REGISTRAR_PRACTICA extends javax.swing.JFrame {
         });
 
         btnGuardarCambios.setBackground(new java.awt.Color(51, 102, 255));
+        btnGuardarCambios.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarCambios.setText("GUARDAR CAMBIOS");
         btnGuardarCambios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
